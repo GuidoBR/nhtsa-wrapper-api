@@ -8,3 +8,7 @@ API to expose [NHTSA NCAP 5 Star Safety Ratings API](https://one.nhtsa.gov/webap
 composer install
 php -S localhost:8000 -t public
 ```
+
+## Documentation
+
+[Vehicle Safety API documentation](http://docs.vehiclesafetyapi.apiary.io)
