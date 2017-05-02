@@ -1,4 +1,7 @@
 <?php
+$app->get('/', function () use ($app) {
+    return $app->version();
+});
 
 // GET http://localhost:8080/vehicles/<MODEL YEAR>/<MANUFACTURER>/<MODEL>
 $app->get('/vehicles/{model_year}/{manufacturer}/{model}', function () use ($app) {
