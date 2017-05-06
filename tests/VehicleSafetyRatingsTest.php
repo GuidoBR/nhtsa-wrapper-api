@@ -11,7 +11,7 @@ class VehicleSafetyRatingsTest extends TestCase
 
         public function testGetAudiA3Returns4Results()
         {
-                $expectedResult = [
+                $expectedResponse = [
                         "Count" => 4,
                         "Results" => [
                                 ["Description" => "2015 Audi A3 4 DR AWD", "VehicleId" => 9403],
@@ -22,13 +22,13 @@ class VehicleSafetyRatingsTest extends TestCase
                 ];
                 $this->get('/vehicles/2015/Audi/A3')
 						->shouldReturnJson()
-						->assertResponseStatus(200)
-                        ->seeJsonEquals($expectedResult);
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponse);
         }
 
         public function testGetAcuraRDXAReturns2Results()
         {
-                $expectedResult = [
+                $expectedResponse = [
                         "Count" => 2,
                         "Results" => [
                                 ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731],
@@ -37,38 +37,38 @@ class VehicleSafetyRatingsTest extends TestCase
                 ];
                 $this->get('/vehicles/2013/Acura/RDX')
 						->shouldReturnJson()
-						->assertResponseStatus(200)
-                        ->seeJsonEquals($expectedResult);
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponse);
 
         }
 
         public function testGetAnUnknowVehicleReturnsAppropriateResult()
         {
-                $expectedResult = [
+                $expectedResponse = [
                         "Count" => 0,
                         "Results" => []
                 ];
                 $this->get('/vehicles/2015/Acura/CarX')
 						->shouldReturnJson()
-						->assertResponseStatus(404)
-                        ->seeJsonEquals($expectedResult);
+						->seeStatusCode(404)
+                        ->seeJsonEquals($expectedResponse);
         }
 
         public function testGetAnUnknowYearReturnsAppropriateResult()
         {
-                $expectedResult = [
+                $expectedResponse = [
                         "Count" => 0,
                         "Results" => []
                 ];
                 $this->get('/vehicles/404/Acura/CarX')
 						->shouldReturnJson()
-						->assertResponseStatus(400)
-                        ->seeJsonEquals($expectedResult);
+						->seeStatusCode(400)
+                        ->seeJsonEquals($expectedResponse);
         }
 
         public function testCreateAcuraRDXTESTReturns3Results()
         {
-                $expectedResult = [
+                $expectedResponse = [
                         "Count" => 2,
                         "Results" => [
                                 ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731],
@@ -79,13 +79,13 @@ class VehicleSafetyRatingsTest extends TestCase
 				$newVehicle = ['modelYear' => '2013', 'manufacturer' => 'Acura', 'model' => 'RDX TEST'];
                 $this->json('POST', '/vehicles', $newVehicle)
 						->shouldReturnJson()
-						->assertResponseStatus(201)
-                        ->seeJsonEquals($expected);
+						->seeStatusCode(201)
+                        ->seeJsonEquals($expectedResponse);
         }
 
 		public function testGetAllAcuraWithRatings()
 		{
-				$expectedResult = [
+				$expectedResponse = [
 						'Counts' => 2,
 						'Results' => [
                                 ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731, 'CrashRating' => 'Not Rated'],
@@ -94,8 +94,8 @@ class VehicleSafetyRatingsTest extends TestCase
 				];
 				$this->get('/vehicles/2013/Acura/RDX?withRating=true')
 						->shouldReturnJson()
-						->assertResponseStatus(200)
-                        ->seeJsonEquals($expectedResult);
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponse);
 		}
 
 }
