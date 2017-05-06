@@ -100,15 +100,23 @@ class VehicleSafetyRatingsController extends Controller
             $response = $client->request('GET', $url);
                     return $this->createResponse($response);
         } catch (\Exception $e) {
-            return response()->json(["Count" => 0, "Results" => []], 404);
+            print($e);
+            return response()->json(["Count" => 0, "Results" => []], 500);
         }
     }
 
     protected function createResponse($response)
     {
+            $apiResponse = [];
             $json = json_decode($response->getBody(), true);
             if ($response->getStatusCode() == 200 && $json['Count'] != 0) {
-                    return  response()->json(json_decode($response->getBody(), true), 200);
+                    $apiResponse["Count"] = $json["Count"];
+                    $apiResponse["Results"] = [];
+                    foreach ($json["Results"] as $result) {
+                            $apiResponse["Results"][] = ["Description" => $result["VehicleDescription"], "VehicleId" => $result["VehicleId"]];
+                    }
+
+                    return  response()->json($apiResponse, 200);
             }
 
             return response()->json(["Count" => 0, "Results" => []], 404);
