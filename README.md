@@ -1,4 +1,5 @@
 # [Vehicle Safety API](https://vehicle-safety-api.herokuapp.com/)
+[![Code Climate](https://codeclimate.com/github/GuidoBR/nhtsa-wrapper-api.png)](https://codeclimate.com/github/GuidoBR/nhtsa-wrapper-api)
 [![Build Status](https://travis-ci.org/GuidoBR/nhtsa-wrapper-api.svg?branch=master)](https://travis-ci.org/GuidoBR/nhtsa-wrapper-api)
 
 API to expose [NHTSA NCAP 5 Star Safety Ratings API](https://one.nhtsa.gov/webapi/Default.aspx?SafetyRatings/API/5)
