@@ -24,7 +24,8 @@ class VehicleSafetyRatingsController extends Controller
             return $this->getAllWithRatings($request, $year, $manufacturer, $model);
         };
 
-        return $this->makeGetRequest($year, $manufacturer, $model);
+        $nhtsa = new NHTSAController();
+        return $nhtsa->makeGetRequest($year, $manufacturer, $model);
     }
 
     public function post(Request $request)
@@ -61,35 +62,5 @@ class VehicleSafetyRatingsController extends Controller
             return true;
         }
         return false;
-    }
-
-    protected function makeGetRequest($year, $manufacturer, $model)
-    {
-        $url = "https://one.nhtsa.gov/webapi/api/SafetyRatings/modelyear/$year/make/$manufacturer/model/$model?format=json";
-        try {
-            $client = new Client();
-            $response = $client->request('GET', $url);
-                    return $this->createResponse($response);
-        } catch (\Exception $e) {
-            print($e);
-            return response()->json(["Count" => 0, "Results" => []], 500);
-        }
-    }
-
-    protected function createResponse($response)
-    {
-            $apiResponse = [];
-            $json = json_decode($response->getBody(), true);
-            if ($response->getStatusCode() == 200 && $json['Count'] != 0) {
-                    $apiResponse["Count"] = $json["Count"];
-                    $apiResponse["Results"] = [];
-                    foreach ($json["Results"] as $result) {
-                            $apiResponse["Results"][] = ["Description" => $result["VehicleDescription"], "VehicleId" => $result["VehicleId"]];
-                    }
-
-                    return  response()->json($apiResponse, 200);
-            }
-
-            return response()->json(["Count" => 0, "Results" => []], 404);
     }
 }
