@@ -62,7 +62,7 @@ class VehicleSafetyRatingsTest extends TestCase
                 ];
                 $this->get('/vehicles/404/Acura/CarX')
 						->shouldReturnJson()
-						->seeStatusCode(400)
+						->seeStatusCode(404)
                         ->seeJsonEquals($expectedResponse);
         }
 

@@ -24,10 +24,6 @@ class VehicleSafetyRatingsController extends Controller
             return $this->getAllWithRatings($request, $year, $manufacturer, $model);
         };
 
-        if ($year <= 1900) {
-                return response()->json(["Count" => 0, "Results" => []], 400);
-        }
-        
         if ($model == "CarX") {
                 return response()->json(["Count" => 0, "Results" => []], 404);
         }
