@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Response;
 use \Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class VehicleSafetyRatingsController extends Controller
 {
@@ -51,7 +52,7 @@ class VehicleSafetyRatingsController extends Controller
                         ["Description" => "2015 Audi A3 C FWD", "VehicleId" => 9406],
                 ]
         ];
-        
+        return $this->makeGetRequest("https://one.nhtsa.gov/webapi/api/SafetyRatings/modelyear/2013/make/Acura/model/rdx?format=json");
         return response()->json($tdd, 200);
     }
 
@@ -89,5 +90,18 @@ class VehicleSafetyRatingsController extends Controller
             return true;
         }
         return false;
+    }
+
+    protected function makeGetRequest($url)
+    {
+        try {
+            $client = new Client();
+            $response = $client->request('GET', $url);
+            if ($response->getStatusCode() == 200) {
+                    return response()->json(json_decode($response->getBody(), true), 200);
+            }
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 }
