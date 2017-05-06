@@ -52,7 +52,7 @@ class VehicleSafetyRatingsController extends Controller
                         ["Description" => "2015 Audi A3 C FWD", "VehicleId" => 9406],
                 ]
         ];
-        return $this->makeGetRequest("https://one.nhtsa.gov/webapi/api/SafetyRatings/modelyear/2013/make/Acura/model/rdx?format=json");
+        return $this->makeGetRequest($year, $manufacturer, $model);
         return response()->json($tdd, 200);
     }
 
@@ -92,16 +92,25 @@ class VehicleSafetyRatingsController extends Controller
         return false;
     }
 
-    protected function makeGetRequest($url)
+    protected function makeGetRequest($year, $manufacturer, $model)
     {
+        $url = "https://one.nhtsa.gov/webapi/api/SafetyRatings/modelyear/$year/make/$manufacturer/model/$model?format=json";
         try {
             $client = new Client();
             $response = $client->request('GET', $url);
-            if ($response->getStatusCode() == 200) {
-                    return response()->json(json_decode($response->getBody(), true), 200);
-            }
+                    return $this->createResponse($response);
         } catch (\Exception $e) {
-            return [];
+            return response()->json(["Count" => 0, "Results" => []], 404);
         }
+    }
+
+    protected function createResponse($response)
+    {
+            $json = json_decode($response->getBody(), true);
+            if ($response->getStatusCode() == 200 && $json['Count'] != 0) {
+                    return  response()->json(json_decode($response->getBody(), true), 200);
+            }
+
+            return response()->json(["Count" => 0, "Results" => []], 404);
     }
 }
