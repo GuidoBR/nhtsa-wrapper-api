@@ -18,20 +18,20 @@ class NhtsaController extends Controller
         //
     }
 
-    public function makeGetRequest($year, $manufacturer, $model)
+    public function makeGetRequest($year, $manufacturer, $model, $method="GET")
     {
         $url = "https://one.nhtsa.gov/webapi/api/SafetyRatings/modelyear/$year/make/$manufacturer/model/$model?format=json";
         try {
             $client = new Client();
             $response = $client->request('GET', $url);
-                    return $this->createResponse($response);
+                    return $this->createResponse($response, $method);
         } catch (\Exception $e) {
             print($e);
             return response()->json(["Count" => 0, "Results" => []], 500);
         }
     }
 
-    protected function createResponse($response)
+    protected function createResponse($response, $method)
     {
             $apiResponse = [];
             $json = json_decode($response->getBody(), true);
@@ -41,8 +41,10 @@ class NhtsaController extends Controller
                     foreach ($json["Results"] as $result) {
                             $apiResponse["Results"][] = ["Description" => $result["VehicleDescription"], "VehicleId" => $result["VehicleId"]];
                     }
-
-                    return  response()->json($apiResponse, 200);
+                    if ($method == "GET") {
+                            return  response()->json($apiResponse, 200);
+                    }
+                    return  response()->json($apiResponse, 201);
             }
 
             return response()->json(["Count" => 0, "Results" => []], 404);

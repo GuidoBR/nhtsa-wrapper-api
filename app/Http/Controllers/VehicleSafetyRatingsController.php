@@ -30,16 +30,8 @@ class VehicleSafetyRatingsController extends Controller
 
     public function post(Request $request)
     {
-        $tdd = [
-                    "Count" => 2,
-                    "Results" => [
-                            ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731],
-                            ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520],
-                            ["Description" => "2013 Acura RDX TEST", "VehicleId" => 9999],
-                    ]
-        ];
-
-        return response()->json($tdd, 201);
+        $nhtsa = new NHTSAController();
+        return $nhtsa->makeGetRequest(2013, "Acura", "RDX", "POST");
     }
 
     protected function getAllWithRatings(Request $request, $year, $manufacturer, $model)

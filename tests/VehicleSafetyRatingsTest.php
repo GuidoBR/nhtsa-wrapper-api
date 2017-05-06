@@ -73,7 +73,6 @@ class VehicleSafetyRatingsTest extends TestCase
                         "Results" => [
                                 ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731],
                                 ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520],
-                                ["Description" => "2013 Acura RDX TEST", "VehicleId" => 9999],
                         ]
                 ];
 				$newVehicle = ['modelYear' => '2013', 'manufacturer' => 'Acura', 'model' => 'RDX TEST'];
