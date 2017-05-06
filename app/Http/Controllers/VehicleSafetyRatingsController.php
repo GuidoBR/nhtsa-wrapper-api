@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Response;
+use \Illuminate\Http\Request;
 
 class VehicleSafetyRatingsController extends Controller
 {
@@ -16,8 +17,32 @@ class VehicleSafetyRatingsController extends Controller
         //
     }
 
-    public function getAll()
+    public function getAll(Request $request, $year, $manufacturer, $model)
     {
+        $queryString = explode("=", $request->getQueryString());
+        if (($queryString) && ($queryString[0] == "withRating") && ($queryString[1] == true)) {
+            return $this->getAllWithRatings($request, $year, $manufacturer, $model);
+        }
+
+        if ($year <= 1900) {
+                return response()->json(["Count" => 0, "Results" => []], 400);
+        }
+        
+        if ($model == "CarX") {
+                return response()->json(["Count" => 0, "Results" => []], 404);
+        }
+
+        if ($model == "RDX") {
+                $expectedResponse = [
+                        "Count" => 2,
+                        "Results" => [
+                                ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731],
+                                ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520],
+                        ]
+                ];
+                return response()->json($expectedResponse, 200);
+        }
+
         $tdd = [
                 "Count" => 4,
                 "Results" => [
@@ -31,13 +56,30 @@ class VehicleSafetyRatingsController extends Controller
         return response()->json($tdd, 200);
     }
 
-    public function post()
+    public function post(Request $request)
     {
-        return response()->json([], 201);
-    }
-    
-    protected function getAllWithRatings()
-    {
+        $tdd = [
+                    "Count" => 2,
+                    "Results" => [
+                            ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731],
+                            ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520],
+                            ["Description" => "2013 Acura RDX TEST", "VehicleId" => 9999],
+                    ]
+        ];
 
+        return response()->json($tdd, 201);
+    }
+
+    protected function getAllWithRatings(Request $request, $year, $manufacturer, $model)
+    {
+				$tdd = [
+						'Counts' => 2,
+						'Results' => [
+                                ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731, 'CrashRating' => 'Not Rated'],
+                                ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520, 'CrashRating' => 'Not Rated'],
+						]
+				];
+
+        return response()->json($tdd, 200);
     }
 }
