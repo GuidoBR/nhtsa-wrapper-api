@@ -66,7 +66,7 @@ class VehicleSafetyRatingsTest extends TestCase
                         ->seeJsonEquals($expectedResponse);
         }
 
-        public function testCreateAcuraRDXTESTReturns3Results()
+        public function testCreateAcuraRDXTESTReturns2Results()
         {
                 $expectedResponse = [
                         "Count" => 2,
