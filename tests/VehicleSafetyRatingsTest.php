@@ -75,7 +75,7 @@ class VehicleSafetyRatingsTest extends TestCase
                                 ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520],
                         ]
                 ];
-				$newVehicle = ['modelYear' => '2013', 'manufacturer' => 'Acura', 'model' => 'RDX TEST'];
+				$newVehicle = ['modelYear' => '2013', 'manufacturer' => 'Acura', 'model' => 'RDX'];
                 $this->json('POST', '/vehicles', $newVehicle)
 						->shouldReturnJson()
 						->seeStatusCode(201)

@@ -30,8 +30,12 @@ class VehicleSafetyRatingsController extends Controller
 
     public function post(Request $request)
     {
+        $year = $request->input("modelYear");
+        $manufacturer = $request->input("manufacturer");
+        $model = $request->input("model");
+
         $nhtsa = new NHTSAController();
-        return $nhtsa->makeGetRequest(2013, "Acura", "RDX", "POST");
+        return $nhtsa->makeGetRequest($year, $manufacturer, $model, "POST");
     }
 
     protected function getAllWithRatings(Request $request, $year, $manufacturer, $model)
