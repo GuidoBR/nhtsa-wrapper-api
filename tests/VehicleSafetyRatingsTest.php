@@ -63,4 +63,34 @@ class VehicleSafetyRatingsTest extends TestCase
                         ->seeJsonEquals($expectedResult);
                 $this->assertEquals($this->response->status(), 400);
         }
+
+        public function testCreateAcuraRDXTESTReturns3Results()
+        {
+                $expectedResult = [
+                        "Count" => 2,
+                        "Results" => [
+                                ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731],
+                                ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520],
+                                ["Description" => "2013 Acura RDX TEST", "VehicleId" => 9999],
+                        ]
+                ];
+				$newVehicle = ['modelYear' => '2013', 'manufacturer' => 'Acura', 'model' => 'RDX TEST'];
+                $this->json('POST', '/vehicles', $newVehicle)
+                        ->seeJsonEquals($expected);
+                $this->assertEquals($this->response->status(), 400);
+        }
+
+		public function testGetAllAcuraWithRatings()
+		{
+				$expectedResult = [
+						'Counts' => 2,
+						'Results' => [
+                                ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731, 'CrashRating' => 'Not Rated'],
+                                ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520, 'CrashRating' => 'Not Rated'],
+						]
+				];
+				$this->get('/vehicles/2013/Acura/RDX?withRating=true')
+                        ->seeJsonEquals($expectedResult);
+		}
+
 }
