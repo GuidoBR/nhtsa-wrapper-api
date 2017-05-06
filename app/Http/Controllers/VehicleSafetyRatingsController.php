@@ -24,32 +24,7 @@ class VehicleSafetyRatingsController extends Controller
             return $this->getAllWithRatings($request, $year, $manufacturer, $model);
         };
 
-        if ($model == "CarX") {
-                return response()->json(["Count" => 0, "Results" => []], 404);
-        }
-
-        if ($model == "RDX") {
-                $expectedResponse = [
-                        "Count" => 2,
-                        "Results" => [
-                                ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731],
-                                ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520],
-                        ]
-                ];
-                return response()->json($expectedResponse, 200);
-        }
-
-        $tdd = [
-                "Count" => 4,
-                "Results" => [
-                        ["Description" => "2015 Audi A3 4 DR AWD", "VehicleId" => 9403],
-                        ["Description" => "2015 Audi A3 4 DR FWD", "VehicleId" => 9408],
-                        ["Description" => "2015 Audi A3 C AWD", "VehicleId" => 9405],
-                        ["Description" => "2015 Audi A3 C FWD", "VehicleId" => 9406],
-                ]
-        ];
         return $this->makeGetRequest($year, $manufacturer, $model);
-        return response()->json($tdd, 200);
     }
 
     public function post(Request $request)
