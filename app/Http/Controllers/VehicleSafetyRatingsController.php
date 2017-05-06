@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class ExampleController extends Controller
+class VehicleSafetyRatingsController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -14,5 +14,18 @@ class ExampleController extends Controller
         //
     }
 
-    //
+    public function getAll()
+    {
+
+    }
+
+    public function post()
+    {
+
+    }
+    
+    protected function getAllWithRatings()
+    {
+
+    }
 }
