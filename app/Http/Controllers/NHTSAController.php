@@ -24,11 +24,32 @@ class NhtsaController extends Controller
         try {
             $client = new Client();
             $response = $client->request('GET', $url);
-                    return $this->createResponse($response, $method);
+            return $this->createResponse($response, $method);
         } catch (\Exception $e) {
             print($e);
             return response()->json(["Count" => 0, "Results" => []], 500);
         }
+    }
+
+    public function getVehicleRatingById($vehicleId)
+    {
+        $url = "https://one.nhtsa.gov/webapi/api/SafetyRatings/VehicleId/$vehicleId?format=json";
+        try {
+            $client = new Client();
+            $response = $client->request('GET', $url);
+            return $this->getOverallRating($response);
+        } catch (\Exception $e) {
+            print($e);
+            return response()->json(["Count" => 0, "Results" => []], 500);
+        }
+    
+    }
+
+    protected function getOverallRating($response)
+    {
+            $json = json_decode($response->getBody(), true);
+            return $json["Results"][0]["OverallRating"];
+    
     }
 
     protected function createResponse($response, $method)

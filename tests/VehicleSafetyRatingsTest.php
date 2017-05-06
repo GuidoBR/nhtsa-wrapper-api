@@ -85,7 +85,7 @@ class VehicleSafetyRatingsTest extends TestCase
 		public function testGetAllAcuraWithRatings()
 		{
 				$expectedResponse = [
-						'Counts' => 2,
+						'Count' => 2,
 						'Results' => [
                                 ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731, 'CrashRating' => 'Not Rated'],
                                 ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520, 'CrashRating' => 'Not Rated'],

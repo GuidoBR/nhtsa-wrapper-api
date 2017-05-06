@@ -40,15 +40,18 @@ class VehicleSafetyRatingsController extends Controller
 
     protected function getAllWithRatings(Request $request, $year, $manufacturer, $model)
     {
-				$tdd = [
-						'Counts' => 2,
-						'Results' => [
-                                ["Description" => "2013 Acura RDX SUV 4WD", "VehicleId" => 7731, 'CrashRating' => 'Not Rated'],
-                                ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520, 'CrashRating' => 'Not Rated'],
-						]
-				];
+        $nhtsa = new NHTSAController();
+        $response = $nhtsa->makeGetRequest($year, $manufacturer, $model);
+        $responseContent = json_decode($response->content(), true);
 
-        return response()->json($tdd, 200);
+        $apiResponse = [];
+        $apiResponse["Count"] = $responseContent["Count"];
+        foreach ($responseContent["Results"] as $res) {
+                $res["CrashRating"] = $nhtsa->getVehicleRatingById($res["VehicleId"]);
+                $apiResponse["Results"][] = $res;
+        }
+
+        return response()->json($apiResponse, 200);
     }
     
     protected function filterQueryString(Request $request)
