@@ -97,4 +97,19 @@ class VehicleSafetyRatingsTest extends TestCase
                         ->seeJsonEquals($expectedResponse);
 		}
 
+		public function testGetAllAudiA5WithRatings()
+		{
+				$expectedResponse = [
+						'Count' => 2,
+						'Results' => [
+                                ["Description" => "2015 Audi A5 2 DR AWD", "VehicleId" => 9409, "CrashRating" => "Not Rated"],
+                                ["Description" => "2015 Audi A5 C AWD", "VehicleId" => 9410, "CrashRating" => "Not Rated"],
+						]
+				];
+				$this->get('/vehicles/2015/Audi/A5?withRating=true')
+						->shouldReturnJson()
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponse);
+		}
+
 }
