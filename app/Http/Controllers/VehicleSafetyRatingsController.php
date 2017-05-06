@@ -19,10 +19,9 @@ class VehicleSafetyRatingsController extends Controller
 
     public function getAll(Request $request, $year, $manufacturer, $model)
     {
-        $queryString = explode("=", $request->getQueryString());
-        if (($queryString) && ($queryString[0] == "withRating") && ($queryString[1] == true)) {
+        if ($this->filterQueryString($request)) {
             return $this->getAllWithRatings($request, $year, $manufacturer, $model);
-        }
+        };
 
         if ($year <= 1900) {
                 return response()->json(["Count" => 0, "Results" => []], 400);
@@ -81,5 +80,14 @@ class VehicleSafetyRatingsController extends Controller
 				];
 
         return response()->json($tdd, 200);
+    }
+    
+    protected function filterQueryString(Request $request)
+    {
+        $queryString = explode("=", $request->getQueryString());
+        if (($queryString) && ($queryString[0] == "withRating") && ($queryString[1] == true)) {
+            return true;
+        }
+        return false;
     }
 }
