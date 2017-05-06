@@ -31,7 +31,7 @@ http localhost:8000/vehicles/2015/audi/a3\?withRating\=true
 ### Post a vehicle
 
 ```
-http POST localhost:8000/vehicles/ modelYear=2015 manufacturer=Audi model=A3
+http POST localhost:8000/vehicles modelYear=2015 manufacturer=Audi model=A3
 ```
 
 ### Documentation
