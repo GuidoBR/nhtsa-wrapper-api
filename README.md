@@ -23,7 +23,7 @@ http localhost:8000/vehicles/2015/audi/a5
 
 ### Get a vehicle with ratings
 ```
-http localhost:8000/vehicles/2015/audi/a5?withRating=true
+http localhost:8000/vehicles/2015/audi/a3\?withRating\=true
 ```
 
 ### Post a vehicle
