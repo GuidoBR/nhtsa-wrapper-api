@@ -21,9 +21,9 @@ class VehicleSafetyRatingsTest extends TestCase
                         ]
                 ];
                 $this->get('/vehicles/2015/Audi/A3')
+						->shouldReturnJson()
+						->assertResponseStatus(200)
                         ->seeJsonEquals($expectedResult);
-
-                $this->assertEquals($this->response->status(), 200);
         }
 
         public function testGetAcuraRDXAReturns2Results()
@@ -36,9 +36,9 @@ class VehicleSafetyRatingsTest extends TestCase
                         ]
                 ];
                 $this->get('/vehicles/2013/Acura/RDX')
+						->shouldReturnJson()
+						->assertResponseStatus(200)
                         ->seeJsonEquals($expectedResult);
-
-                $this->assertEquals($this->response->status(), 200);
 
         }
 
@@ -49,8 +49,9 @@ class VehicleSafetyRatingsTest extends TestCase
                         "Results" => []
                 ];
                 $this->get('/vehicles/2015/Acura/CarX')
+						->shouldReturnJson()
+						->assertResponseStatus(404)
                         ->seeJsonEquals($expectedResult);
-                $this->assertEquals($this->response->status(), 404);
         }
 
         public function testGetAnUnknowYearReturnsAppropriateResult()
@@ -60,8 +61,9 @@ class VehicleSafetyRatingsTest extends TestCase
                         "Results" => []
                 ];
                 $this->get('/vehicles/404/Acura/CarX')
+						->shouldReturnJson()
+						->assertResponseStatus(400)
                         ->seeJsonEquals($expectedResult);
-                $this->assertEquals($this->response->status(), 400);
         }
 
         public function testCreateAcuraRDXTESTReturns3Results()
@@ -76,8 +78,9 @@ class VehicleSafetyRatingsTest extends TestCase
                 ];
 				$newVehicle = ['modelYear' => '2013', 'manufacturer' => 'Acura', 'model' => 'RDX TEST'];
                 $this->json('POST', '/vehicles', $newVehicle)
+						->shouldReturnJson()
+						->assertResponseStatus(201)
                         ->seeJsonEquals($expected);
-                $this->assertEquals($this->response->status(), 400);
         }
 
 		public function testGetAllAcuraWithRatings()
@@ -90,6 +93,8 @@ class VehicleSafetyRatingsTest extends TestCase
 						]
 				];
 				$this->get('/vehicles/2013/Acura/RDX?withRating=true')
+						->shouldReturnJson()
+						->assertResponseStatus(200)
                         ->seeJsonEquals($expectedResult);
 		}
 
