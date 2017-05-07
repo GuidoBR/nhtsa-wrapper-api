@@ -39,12 +39,14 @@ object containing a model year, manufacter and model name.
             ]
         }
         
-## Vehicle [/vehicles/{model_year}/{manufacturer}/{model}]
+## Vehicle [/vehicles/{model_year}/{manufacturer}/{model}{?withRating}]
 
  + Parameters
     + model_year (number) - Year that model was manufactured. Example: 2015
     + manufacturer (string) - Company that manufactured the model. Example: Audi
     + model (string) - Name of the model. Example A3
+    + withRating (boolean, optional) - If set to true, returns the safety rating
+        + Default: false
 
 ### List a vehicle [GET]
 
