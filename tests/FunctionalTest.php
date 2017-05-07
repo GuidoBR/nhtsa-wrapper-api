@@ -3,7 +3,7 @@
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
-class VehicleSafetyRatingsTest extends TestCase
+class FunctionalTest extends TestCase
 {
         /*
          * VehicleSafetyRatingsTest - Functional tests (end-to-end) that uses the API
