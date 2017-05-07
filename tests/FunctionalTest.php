@@ -189,4 +189,53 @@ class FunctionalTest extends TestCase
 						->seeStatusCode(404)
                         ->seeJsonEquals($expectedResponseUrl4);
 		}
+
+		public function testAllRequirement2Urls()
+		{
+                $vehicleTest1 = ["modelYear" => 2015, "manufacturer" => "Audi", "model" => "A3"];
+                $vehicleTest2 = ["modelYear" => 2015, "manufacturer" => "Toyota", "model" => "Yaris"];
+                $vehicleTest3 = ["manufacturer" => "Honda", "model" => "Accord"];
+
+                $url = '/vehicles';
+ 
+                $expectedResponseUrl1 = [
+                        "Count" => 4,
+                        "Results" => [
+                                ["Description" => "2015 Audi A3 4 DR AWD", "VehicleId" => 9403],
+                                ["Description" => "2015 Audi A3 4 DR FWD", "VehicleId" => 9408],
+                                ["Description" => "2015 Audi A3 C AWD", "VehicleId" => 9405],
+                                ["Description" => "2015 Audi A3 C FWD", "VehicleId" => 9406],
+                        ]
+                ];
+
+                $expectedResponseUrl2 = [
+                        "Count" => 4,
+                        "Results" => [
+                                ["Description" => "2015 Audi A3 4 DR AWD", "VehicleId" => 9403],
+                                ["Description" => "2015 Audi A3 4 DR FWD", "VehicleId" => 9408],
+                                ["Description" => "2015 Audi A3 C AWD", "VehicleId" => 9405],
+                                ["Description" => "2015 Audi A3 C FWD", "VehicleId" => 9406],
+                        ]
+                ];
+
+                $expectedResponseUrl3 = [
+                        "Count" => 0,
+                        "Results" => []
+                ];
+
+                $this->json('POST', '/vehicles', $vehicleTest1)
+						->shouldReturnJson()
+						->seeStatusCode(201)
+                        ->seeJsonEquals($expectedResponseUrl1);
+
+                $this->json('POST', '/vehicles', $vehicleTest2)
+						->shouldReturnJson()
+						->seeStatusCode(201)
+                        ->seeJsonEquals($expectedResponseUrl2);
+
+                $this->json('POST', '/vehicles', $vehicleTest3)
+						->shouldReturnJson()
+						->seeStatusCode(400)
+                        ->seeJsonEquals($expectedResponseUrl3);
+		}
 }
