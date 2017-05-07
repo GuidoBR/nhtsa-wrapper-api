@@ -9,17 +9,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 
 class NhtsaController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    public function makeGetRequest($year, $manufacturer, $model, $method="GET")
+    public function getVehicles($year, $manufacturer, $model, $method="GET")
     {
         $url = "https://one.nhtsa.gov/webapi/api/SafetyRatings/modelyear/$year/make/$manufacturer/model/$model?format=json";
         try {
@@ -27,8 +17,7 @@ class NhtsaController extends BaseController
             $response = $client->request('GET', $url);
             return $this->createResponse($response, $method);
         } catch (\Exception $e) {
-            print($e);
-            return response()->json(["Count" => 0, "Results" => []], 500);
+            return $this->sendErrorResponse(500);
         }
     }
 
@@ -40,10 +29,13 @@ class NhtsaController extends BaseController
             $response = $client->request('GET', $url);
             return $this->getOverallRating($response);
         } catch (\Exception $e) {
-            print($e);
-            return response()->json(["Count" => 0, "Results" => []], 500);
+            return $this->sendErrorResponse(500);
         }
+    }
 
+    public function sendErrorResponse($statusCode)
+    {
+        return response()->json(["Count" => 0, "Results" => []], $statusCode);
     }
 
     protected function getOverallRating($response)
@@ -63,12 +55,10 @@ class NhtsaController extends BaseController
             foreach ($json["Results"] as $result) {
                 $apiResponse["Results"][] = ["Description" => $result["VehicleDescription"], "VehicleId" => $result["VehicleId"]];
             }
-            if ($method == "GET") {
-                return  response()->json($apiResponse, 200);
-            }
-            return  response()->json($apiResponse, 201);
+            $successStatus = ($method == "GET") ? 200 : 201;
+            return  response()->json($apiResponse, $successStatus);
         }
 
-        return response()->json(["Count" => 0, "Results" => []], 404);
+        return $this->sendErrorResponse(404);
     }
 }

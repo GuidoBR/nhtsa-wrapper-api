@@ -9,16 +9,6 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 
 class VehicleSafetyRatingsController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     public function getAll(Request $request, $year, $manufacturer, $model)
     {
         if (!$this->validateRequest($year)) {
@@ -30,7 +20,7 @@ class VehicleSafetyRatingsController extends BaseController
         };
 
         $nhtsa = new NHTSAController();
-        return $nhtsa->makeGetRequest($year, $manufacturer, $model);
+        return $nhtsa->getVehicles($year, $manufacturer, $model);
     }
 
     public function post(Request $request)
@@ -39,18 +29,19 @@ class VehicleSafetyRatingsController extends BaseController
         $manufacturer = $request->input("manufacturer");
         $model = $request->input("model");
 
+        $nhtsa = new NHTSAController();
+
         if (!$this->validateRequest($year)) {
-            return response()->json(["Count"=> 0, "Results"=> []], 400);
+            return $nhtsa->sendErrorResponse(400);
         }
 
-        $nhtsa = new NHTSAController();
-        return $nhtsa->makeGetRequest($year, $manufacturer, $model, "POST");
+        return $nhtsa->getVehicles($year, $manufacturer, $model, "POST");
     }
 
     protected function getAllWithRatings($year, $manufacturer, $model)
     {
         $nhtsa = new NHTSAController();
-        $response = $nhtsa->makeGetRequest($year, $manufacturer, $model);
+        $response = $nhtsa->getVehicles($year, $manufacturer, $model);
         $responseContent = json_decode($response->content(), true);
 
         $apiResponse = [];
