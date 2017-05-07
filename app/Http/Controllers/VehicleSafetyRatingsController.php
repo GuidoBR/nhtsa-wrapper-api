@@ -25,7 +25,7 @@ class VehicleSafetyRatingsController extends Controller
         }
 
         if ($this->filterQueryString($request)) {
-            return $this->getAllWithRatings($request, $year, $manufacturer, $model);
+            return $this->getAllWithRatings($year, $manufacturer, $model);
         };
 
         $nhtsa = new NHTSAController();
@@ -46,7 +46,7 @@ class VehicleSafetyRatingsController extends Controller
         return $nhtsa->makeGetRequest($year, $manufacturer, $model, "POST");
     }
 
-    protected function getAllWithRatings(Request $request, $year, $manufacturer, $model)
+    protected function getAllWithRatings($year, $manufacturer, $model)
     {
         $nhtsa = new NHTSAController();
         $response = $nhtsa->makeGetRequest($year, $manufacturer, $model);
