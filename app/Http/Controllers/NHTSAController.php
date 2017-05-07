@@ -33,6 +33,21 @@ class NhtsaController extends BaseController
         }
     }
 
+    public function getVehiclesWithRating($year, $manufacturer, $model, $method="GET")
+    {
+        $response = $this->getVehicles($year, $manufacturer, $model, $method);
+        $responseContent = json_decode($response->content(), true);
+
+        $apiResponse = [];
+        $apiResponse["Count"] = $responseContent["Count"];
+        foreach ($responseContent["Results"] as $res) {
+            $res["CrashRating"] = $this->getVehicleRatingById($res["VehicleId"]);
+            $apiResponse["Results"][] = $res;
+        }
+
+        return response()->json($apiResponse, 200);
+    }
+
     public function sendErrorResponse($statusCode)
     {
         return response()->json(["Count" => 0, "Results" => []], $statusCode);

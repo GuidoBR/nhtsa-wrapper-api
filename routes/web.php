@@ -3,8 +3,8 @@ $app->get('/', function () {
     return view('index');
 });
 
-$app->get('/vehicles/{year}/{manufacturer}/{model}', 'VehicleSafetyRatingsController@getAll');
-$app->get('/vehicles/{year}/{manufacturer}/{model}?withRating=True', 'VehicleSafetyRatingsController@getAll');
+$app->get('/vehicles/{year}/{manufacturer}/{model}', 'VehicleSafetyRatingsController@get');
+$app->get('/vehicles/{year}/{manufacturer}/{model}?withRating=True', 'VehicleSafetyRatingsController@get');
 $app->post('/vehicles/', 'VehicleSafetyRatingsController@post');
 
 $app->get('/healthcheck', function () {
