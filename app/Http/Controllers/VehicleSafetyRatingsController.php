@@ -55,13 +55,13 @@ class VehicleSafetyRatingsController extends Controller
         $apiResponse = [];
         $apiResponse["Count"] = $responseContent["Count"];
         foreach ($responseContent["Results"] as $res) {
-                $res["CrashRating"] = $nhtsa->getVehicleRatingById($res["VehicleId"]);
-                $apiResponse["Results"][] = $res;
+            $res["CrashRating"] = $nhtsa->getVehicleRatingById($res["VehicleId"]);
+            $apiResponse["Results"][] = $res;
         }
 
         return response()->json($apiResponse, 200);
     }
-    
+
     protected function filterQueryString(Request $request)
     {
         $queryString = explode("=", $request->getQueryString());
