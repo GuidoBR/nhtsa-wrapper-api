@@ -209,12 +209,10 @@ class FunctionalTest extends TestCase
                 ];
 
                 $expectedResponseUrl2 = [
-                        "Count" => 4,
+                        "Count" => 2,
                         "Results" => [
-                                ["Description" => "2015 Audi A3 4 DR AWD", "VehicleId" => 9403],
-                                ["Description" => "2015 Audi A3 4 DR FWD", "VehicleId" => 9408],
-                                ["Description" => "2015 Audi A3 C AWD", "VehicleId" => 9405],
-                                ["Description" => "2015 Audi A3 C FWD", "VehicleId" => 9406],
+                                ["Description" => "2015 Toyota Yaris 3 HB FWD", "VehicleId" => 9791],
+                                ["Description" => "2015 Toyota Yaris Liftback 5 HB FWD", "VehicleId" => 9146],
                         ]
                 ];
 
