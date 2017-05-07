@@ -1,4 +1,4 @@
-# [Vehicle Safety API](https://vehicle-safety-api.herokuapp.com/)
+# [Vehicle Safety API](https://vehicle-safety-api.herokuapp.com/) | [Documentation](http://docs.vehiclesafetyapi.apiary.io)
 [![Code Climate](https://codeclimate.com/github/GuidoBR/nhtsa-wrapper-api.png)](https://codeclimate.com/github/GuidoBR/nhtsa-wrapper-api)
 [![Build Status](https://travis-ci.org/GuidoBR/nhtsa-wrapper-api.svg?branch=master)](https://travis-ci.org/GuidoBR/nhtsa-wrapper-api)
 [![Heroku](https://heroku-badge.herokuapp.com/?app=vehicle-safety-api)](https://vehicle-safety-api.herokuapp.com/)
