@@ -65,7 +65,7 @@ class VehicleSafetyRatingsController extends Controller
     protected function filterQueryString(Request $request)
     {
         $queryString = explode("=", $request->getQueryString());
-        if (($queryString) && ($queryString[0] == "withRating") && ($queryString[1] == true)) {
+        if (($queryString) && ($queryString[0] == "withRating") && (filter_var($queryString[1], FILTER_VALIDATE_BOOLEAN) == true)) {
             return true;
         }
         return false;

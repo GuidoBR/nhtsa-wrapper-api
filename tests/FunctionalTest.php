@@ -236,4 +236,78 @@ class FunctionalTest extends TestCase
 						->seeStatusCode(400)
                         ->seeJsonEquals($expectedResponseUrl3);
 		}
+
+		public function testAllRequirement3Urls()
+        {
+                $url1 = '/vehicles/2015/Toyota/Yaris?withRating=true';
+                $url2 = '/vehicles/2015/Toyota/Yaris?withRating=false';
+                $url3 = '/vehicles/2015/Toyota/Yaris?withRating=banana';
+                $url4 = '/vehicles/2015/Toyota/Yaris?withRating=2';
+                $url5 = '/vehicles/2015/Toyota/Yaris?withRating=1';
+
+                $expectedResponseUrl1 = [
+                        "Count" => 2,
+                        "Results" => [
+                                ["Description" => "2015 Toyota Yaris 3 HB FWD", "VehicleId" => 9791, "CrashRating" => "Not Rated"],
+                                ["Description" => "2015 Toyota Yaris Liftback 5 HB FWD", "VehicleId" => 9146, "CrashRating" => "4"],
+                        ]
+                ];
+
+                $expectedResponseUrl2 = [
+                        "Count" => 2,
+                        "Results" => [
+                                ["Description" => "2015 Toyota Yaris 3 HB FWD", "VehicleId" => 9791],
+                                ["Description" => "2015 Toyota Yaris Liftback 5 HB FWD", "VehicleId" => 9146],
+                        ]
+                ];
+
+                $expectedResponseUrl3 = [
+                        "Count" => 2,
+                        "Results" => [
+                                ["Description" => "2015 Toyota Yaris 3 HB FWD", "VehicleId" => 9791],
+                                ["Description" => "2015 Toyota Yaris Liftback 5 HB FWD", "VehicleId" => 9146],
+                        ]
+                ];
+
+                $expectedResponseUrl4 = [
+                        "Count" => 2,
+                        "Results" => [
+                                ["Description" => "2015 Toyota Yaris 3 HB FWD", "VehicleId" => 9791],
+                                ["Description" => "2015 Toyota Yaris Liftback 5 HB FWD", "VehicleId" => 9146],
+                        ]
+                ];
+
+                $expectedResponseUrl5 = [
+                        "Count" => 2,
+                        "Results" => [
+                                ["Description" => "2015 Toyota Yaris 3 HB FWD", "VehicleId" => 9791, "CrashRating" => "Not Rated"],
+                                ["Description" => "2015 Toyota Yaris Liftback 5 HB FWD", "VehicleId" => 9146, "CrashRating" => "4"],
+                        ]
+                ];
+
+				$this->get($url1)
+						->shouldReturnJson()
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponseUrl1);
+
+				$this->get($url2)
+						->shouldReturnJson()
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponseUrl2);
+
+				$this->get($url3)
+						->shouldReturnJson()
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponseUrl3);
+
+				$this->get($url4)
+						->shouldReturnJson()
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponseUrl4);
+
+				$this->get($url5)
+						->shouldReturnJson()
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponseUrl5);
+		}
 }
