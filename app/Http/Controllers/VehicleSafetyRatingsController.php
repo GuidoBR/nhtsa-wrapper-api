@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Response;
 use \Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Laravel\Lumen\Routing\Controller as BaseController;
 
-class VehicleSafetyRatingsController extends Controller
+class VehicleSafetyRatingsController extends BaseController
 {
     /**
      * Create a new controller instance.
