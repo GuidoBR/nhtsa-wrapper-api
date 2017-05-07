@@ -118,6 +118,8 @@ class FunctionalTest extends TestCase
                 $url2 = '/vehicles/2015/Toyota/Yaris';
                 $url3 = '/vehicles/2015/Ford/Crown Victoria';
                 $url4 = '/vehicles/undefined/Ford/Fusion';
+                $url5 = '/vehicles/2015/undefined/Fusion';
+                $url6 = '/vehicles/2015/Ford/undefined';
 
                 $expectedResponseUrl1 = [
                         "Count" => 4,
@@ -147,6 +149,16 @@ class FunctionalTest extends TestCase
                         "Results" => []
                 ];
 
+                $expectedResponseUrl5 = [
+                        "Count" => 0,
+                        "Results" => []
+                ];
+
+                $expectedResponseUrl6 = [
+                        "Count" => 0,
+                        "Results" => []
+                ];
+
 				$this->get($url1)
 						->shouldReturnJson()
 						->seeStatusCode(200)
@@ -165,6 +177,16 @@ class FunctionalTest extends TestCase
 				$this->get($url4)
 						->shouldReturnJson()
 						->seeStatusCode(400)
+                        ->seeJsonEquals($expectedResponseUrl4);
+
+				$this->get($url5)
+						->shouldReturnJson()
+						->seeStatusCode(404)
+                        ->seeJsonEquals($expectedResponseUrl4);
+
+				$this->get($url6)
+						->shouldReturnJson()
+						->seeStatusCode(404)
                         ->seeJsonEquals($expectedResponseUrl4);
 		}
 }

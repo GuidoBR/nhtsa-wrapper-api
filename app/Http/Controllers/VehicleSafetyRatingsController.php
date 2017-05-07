@@ -20,9 +20,10 @@ class VehicleSafetyRatingsController extends Controller
 
     public function getAll(Request $request, $year, $manufacturer, $model)
     {
-        if (!is_numeric($year)) {
+        if (!$this->validateRequest($year)) {
             return response()->json(["Count"=> 0, "Results"=> []], 400);
         }
+
         if ($this->filterQueryString($request)) {
             return $this->getAllWithRatings($request, $year, $manufacturer, $model);
         };
@@ -36,6 +37,10 @@ class VehicleSafetyRatingsController extends Controller
         $year = $request->input("modelYear");
         $manufacturer = $request->input("manufacturer");
         $model = $request->input("model");
+
+        if (!$this->validateRequest($year)) {
+            return response()->json(["Count"=> 0, "Results"=> []], 400);
+        }
 
         $nhtsa = new NHTSAController();
         return $nhtsa->makeGetRequest($year, $manufacturer, $model, "POST");
@@ -64,5 +69,14 @@ class VehicleSafetyRatingsController extends Controller
             return true;
         }
         return false;
+    }
+
+    protected function validateRequest($year)
+    {
+        if (!is_numeric($year)) {
+            return false;
+        }
+
+        return true;
     }
 }
