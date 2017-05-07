@@ -20,6 +20,9 @@ class VehicleSafetyRatingsController extends Controller
 
     public function getAll(Request $request, $year, $manufacturer, $model)
     {
+        if (!is_numeric($year)) {
+            return response()->json(["Count"=> 0, "Results"=> []], 400);
+        }
         if ($this->filterQueryString($request)) {
             return $this->getAllWithRatings($request, $year, $manufacturer, $model);
         };

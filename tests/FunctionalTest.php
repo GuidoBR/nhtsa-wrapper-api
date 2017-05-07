@@ -112,4 +112,59 @@ class FunctionalTest extends TestCase
                         ->seeJsonEquals($expectedResponse);
 		}
 
+		public function testAllRequirement1Urls()
+		{
+                $url1 = '/vehicles/2015/Audi/A3';
+                $url2 = '/vehicles/2015/Toyota/Yaris';
+                $url3 = '/vehicles/2015/Ford/Crown Victoria';
+                $url4 = '/vehicles/undefined/Ford/Fusion';
+
+                $expectedResponseUrl1 = [
+                        "Count" => 4,
+                        "Results" => [
+                                ["Description" => "2015 Audi A3 4 DR AWD", "VehicleId" => 9403],
+                                ["Description" => "2015 Audi A3 4 DR FWD", "VehicleId" => 9408],
+                                ["Description" => "2015 Audi A3 C AWD", "VehicleId" => 9405],
+                                ["Description" => "2015 Audi A3 C FWD", "VehicleId" => 9406],
+                        ]
+                ];
+
+                $expectedResponseUrl2 = [
+                        "Count" => 2,
+                        "Results" => [
+                                ["Description" => "2015 Toyota Yaris 3 HB FWD", "VehicleId" => 9791],
+                                ["Description" => "2015 Toyota Yaris Liftback 5 HB FWD", "VehicleId" => 9146],
+                        ]
+                ];
+
+                $expectedResponseUrl3 = [
+                        "Count" => 0,
+                        "Results" => []
+                ];
+
+                $expectedResponseUrl4 = [
+                        "Count" => 0,
+                        "Results" => []
+                ];
+
+				$this->get($url1)
+						->shouldReturnJson()
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponseUrl1);
+
+				$this->get($url2)
+						->shouldReturnJson()
+						->seeStatusCode(200)
+                        ->seeJsonEquals($expectedResponseUrl2);
+
+				$this->get($url3)
+						->shouldReturnJson()
+						->seeStatusCode(404)
+                        ->seeJsonEquals($expectedResponseUrl3);
+
+				$this->get($url4)
+						->shouldReturnJson()
+						->seeStatusCode(400)
+                        ->seeJsonEquals($expectedResponseUrl4);
+		}
 }
