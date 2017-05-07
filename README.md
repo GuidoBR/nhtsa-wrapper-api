@@ -15,24 +15,24 @@ composer install
 
 ## Usage
 ```
-php -S localhost:8000 -t public
+php -S localhost:8080 -t public
 ```
 
 ### Get a vehicle
 
 ```
-curl localhost:8000/vehicles/2015/audi/a5
+curl localhost:8080/vehicles/2015/audi/a5
 ```
 
 ### Get a vehicle with ratings
 ```
-curl localhost:8000/vehicles/2015/audi/a3\?withRating\=true
+curl localhost:8080/vehicles/2015/audi/a3\?withRating\=true
 ```
 
 ### Post a vehicle
 
 ```
-curl -d "modelYear=2015&manufacturer=Audi&model=A3" localhost:8000/vehicles
+curl -d "modelYear=2015&manufacturer=Audi&model=A3" localhost:8080/vehicles
 ```
 
 ### Documentation
