@@ -35,7 +35,7 @@ class FunctionalTest extends TestCase
                 ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520],
             ]
         ];
-        $this->get('/vehicles/2013/Acura/RDX')
+        $this->get('/vehicles/2013/Acura/rdx')
             ->shouldReturnJson()
             ->seeStatusCode(200)
             ->seeJsonEquals($expectedResponse);
@@ -75,7 +75,7 @@ class FunctionalTest extends TestCase
                 ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520],
             ]
         ];
-        $newVehicle = ['modelYear' => '2013', 'manufacturer' => 'Acura', 'model' => 'RDX'];
+        $newVehicle = ['modelYear' => '2013', 'manufacturer' => 'Acura', 'model' => 'rdx'];
         $this->json('POST', '/vehicles', $newVehicle)
             ->shouldReturnJson()
             ->seeStatusCode(201)
@@ -91,7 +91,7 @@ class FunctionalTest extends TestCase
                 ["Description" => "2013 Acura RDX SUV FWD", "VehicleId" => 7520, 'CrashRating' => 'Not Rated'],
             ]
         ];
-        $this->get('/vehicles/2013/Acura/RDX?withRating=true')
+        $this->get('/vehicles/2013/Acura/rdx?withRating=true')
             ->shouldReturnJson()
             ->seeStatusCode(200)
             ->seeJsonEquals($expectedResponse);

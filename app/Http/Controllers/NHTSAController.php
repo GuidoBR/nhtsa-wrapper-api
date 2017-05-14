@@ -11,6 +11,8 @@ class NhtsaController extends BaseController
 {
     public function getVehicles($year, $manufacturer, $model, $method="GET")
     {
+        $manufacturer = ucfirst($manufacturer);
+
         $url = "https://one.nhtsa.gov/webapi/api/SafetyRatings/modelyear/$year/make/$manufacturer/model/$model?format=json";
         try {
             $client = new Client();
